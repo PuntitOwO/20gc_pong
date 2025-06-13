@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d1yji7e4yhmv8"]
+[gd_scene load_steps=18 format=3 uid="uid://d1yji7e4yhmv8"]
 
 [ext_resource type="Texture2D" uid="uid://co0wexgw5mfl0" path="res://assets/sprites/paddle_blue.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://8ug16kqf7xpp" path="res://scenes/paddle.gd" id="1_sugp2"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://biiv38up6suu3" path="res://assets/sprites/ball.png" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://drb58113e08xg" path="res://scenes/ball.gd" id="4_tbgi4"]
 [ext_resource type="FontFile" uid="uid://l0nguwitmy8y" path="res://assets/fonts/kenney_space.ttf" id="7_o6xl0"]
+[ext_resource type="AudioStream" uid="uid://blthmyoqwrnr6" path="res://assets/sounds/ball_collision.ogg" id="7_tipki"]
+[ext_resource type="AudioStream" uid="uid://emmqx6e1d0fd" path="res://assets/sounds/goal.ogg" id="9_85g3d"]
+[ext_resource type="Script" uid="uid://bqrm3a70twfsc" path="res://scenes/menu.gd" id="10_choun"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o5qli"]
 normal = Vector2(0, 1)
@@ -87,6 +90,9 @@ texture = ExtResource("4_jyhfs")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("RectangleShape2D_o6xl0")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Ball"]
+stream = ExtResource("7_tipki")
+
 [node name="LeftGoal" type="Area2D" parent="."]
 position = Vector2(-32, 0)
 collision_layer = 0
@@ -136,3 +142,96 @@ grow_vertical = 2
 text = "0"
 label_settings = SubResource("LabelSettings_tipki")
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_85g3d")
+
+[node name="Menu" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("10_choun")
+
+[node name="Control" type="Control" parent="Menu"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scrim" type="ColorRect" parent="Menu/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0.341176, 0.564706)
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/Control/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Control2" type="Control" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Menu/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paddleball"
+label_settings = SubResource("LabelSettings_tipki")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Control" type="Control" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_o6xl0")
+disabled = true
+text = "Resume"
+
+[node name="HSeparator2" type="HSeparator" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Button4" type="Button" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_o6xl0")
+text = "P1 vs P2"
+
+[node name="Button2" type="Button" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_o6xl0")
+text = "   P1 vs CPU"
+
+[node name="Button3" type="Button" parent="Menu/Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_o6xl0")
+text = "CPU vs CPU"
